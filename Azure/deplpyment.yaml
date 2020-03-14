@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: hello
-        image: mycr001.azurecr.io/tshaiman/hello-node
+        image: azblcpregistry.azurecr.io/repo1:latest
         resources:
           requests:
             cpu: 100m
@@ -24,3 +24,17 @@ spec:
         ports:
         - containerPort: 8080
           name: nodejs-port
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-service
+  labels:
+    app: hello
+spec:
+  ports:
+  - port: 80
+    targetPort: nodejs-port
+  selector:
+    app: hello
+  type: LoadBalancer
